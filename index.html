@@ -469,63 +469,45 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                        <h4 class="modal-title">Modal Content is Responsive</h4>
+                                        <h4 class="modal-title">Send Us a Note</h4>
                                     </div>
                                     <div class="modal-body">
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label for="field-1" class="control-label">Name</label>
-                                                    <input type="text" class="form-control" id="field-1" placeholder="John">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="field-2" class="control-label">Surname</label>
-                                                    <input type="text" class="form-control" id="field-2" placeholder="Doe">
+                                                    <input type="text" class="form-control" id="field-1" placeholder="Name">
                                                 </div>
                                             </div>
                                         </div> <!-- end row -->
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                                    <label for="field-3" class="control-label">Address</label>
-                                                    <input type="text" class="form-control" id="field-3" placeholder="Address">
+                                                    <label for="field-3" class="control-label">Email</label>
+                                                    <input type="text" class="form-control" id="field-3" placeholder="Email">
                                                 </div>
                                             </div>
                                         </div> <!-- end row -->
                                         <div class="row">
-                                            <div class="col-md-4">
+                                            <div class="col-md-12">
                                                 <div class="form-group">
-                                                    <label for="field-4" class="control-label">City</label>
-                                                    <input type="text" class="form-control" id="field-4" placeholder="Boston">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label for="field-5" class="control-label">Country</label>
-                                                    <input type="text" class="form-control" id="field-5" placeholder="United States">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label for="field-6" class="control-label">Zip</label>
-                                                    <input type="text" class="form-control" id="field-6" placeholder="123456">
+                                                    <label for="field-2" class="control-label">Subject</label>
+                                                    <input type="text" class="form-control" id="field-2" placeholder="Subject">
                                                 </div>
                                             </div>
                                         </div> <!-- end row -->
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="form-group no-margin">
-                                                    <label for="field-7" class="control-label">Personal Info</label>
-                                                    <textarea class="form-control autogrow" id="field-7" placeholder="Write something about yourself" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 104px;"></textarea>
+                                                    <label for="field-7" class="control-label">Message</label>
+                                                    <textarea class="form-control autogrow" id="field-7" placeholder="Message" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 104px;"></textarea>
                                                 </div>
                                             </div>
                                         </div> <!-- end row -->
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-info waves-effect waves-light">Save changes</button>
+                                        <a href="#" id="submit-contact" class="btn btn-info waves-effect waves-light">Send</a>
                                     </div>
                                 </div>
                             </div>
@@ -570,6 +552,15 @@
                     }
                 });
 
+                $('#submit-contact').click(function(){
+                    event.preventDefault();
+                    var contactEmailTo = 'hello'+'@'+'highway4tech'+'.'+'com';
+                    var contactName = $('input#field-1').val();
+                    var contactSubject = $('input#field-2').val();
+                    var contactEmailFrom = $('input#field-3').val();
+                    var contactMessage = $('textarea#field-7').val();
+                    window.location = 'mailto:'+contactEmailTo+'?body='+contactMessage+'&subject='+contactSubject+'&cc='+contactEmailFrom+'&body='+contactMessage;
+                });
 
                 $('.portfolioFilter a').click(function () {
                     $('.portfolioFilter .current').removeClass('current');
