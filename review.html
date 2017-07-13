@@ -130,6 +130,7 @@
             <div class="container">
                 <div class="row">
                 	<div class="col-sm-12">
+                		<span id="content-append"></span>
 	                    <script id="content" type="text/x-handlebars-template">
 	                       <p>
 	                          My name is {{company_name}}. I am a {{id}}.
@@ -253,6 +254,7 @@
 
         <!-- js placed at the end of the document so the pages load faster -->
         <script src="js/jquery-2.1.4.min.js"></script>
+        <script src="js/handlebars-v4.0.10.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <!-- Animated js -->
         <script src="js/wow.min.js"></script>
@@ -272,8 +274,37 @@
         <!-- Main Js -->
         <script src="js/main.js"></script>
 
-        <script src="js/handlebars-v4.0.10.js"></script>
         <script type="text/javascript"> 
+        	// Handlebars JS start
+        	var template = $('#content').html(),
+        		templateScript = Handlebars.compile(template),
+        		data = $.getJSON( "data/hwy4_reviews.json", function( json ) {
+        	}).success(function(json){
+
+        		$(json).each(function(){
+        			if(this.review_id == getParameterByName('rid')) {
+        				window.json_html = templateScript(this);
+        				$('#content-append').append(json_html);
+        			}		
+        		});
+
+        		if(window.json_html == undefined) {
+        			window.location = 'http://highway4tech.com';
+        		}
+
+        	});
+
+        	function getParameterByName(name, url) {
+        	    if (!url) url = window.location.href;
+        	    name = name.replace(/[\[\]]/g, "\\$&");
+        	    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        	        results = regex.exec(url);
+        	    if (!results) return null;
+        	    if (!results[2]) return '';
+        	    return decodeURIComponent(results[2].replace(/\+/g, " "));
+        	}
+        	// Handlebars JS end
+
             $(window).load(function () {
 
                 $('#submit-contact').click(function(){
@@ -322,37 +353,6 @@
                       }
                     }
                   });
-
-				// Handlebars JS start
-				var template = $('#content').html(),
-					templateScript = Handlebars.compile(template),
-					data = $.getJSON( "data/hwy4_reviews.json", function( json ) {
-				}).success(function(json){
-
-					$(json).each(function(){
-						if(this.review_id == getParameterByName('rid')) {
-							window.json_html = templateScript(this);
-							$(document.body).append(json_html);
-						}		
-					});
-
-					if(window.json_html == undefined) {
-						window.location = 'http://highway4tech.com';
-					}
-
-				});
-
-				function getParameterByName(name, url) {
-				    if (!url) url = window.location.href;
-				    name = name.replace(/[\[\]]/g, "\\$&");
-				    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-				        results = regex.exec(url);
-				    if (!results) return null;
-				    if (!results[2]) return '';
-				    return decodeURIComponent(results[2].replace(/\+/g, " "));
-				}
-
-				// Handlebars JS end
             });
         </script>
 
