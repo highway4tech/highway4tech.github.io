@@ -36,6 +36,17 @@
         a.logo span small {
             font-size: 14px;
         }
+        .page-header-box {
+        	background-color: #28282e;
+        	padding: 100px 0 50px 0;	
+        }
+        #results {
+            padding-top: 35px;
+            padding-bottom: 60px;
+        }
+        .strong {
+            font-weight: bold;
+        }
         </style>
 
     </head>
@@ -102,45 +113,72 @@
         </header>
         <!-- End Navigation Bar-->
 
-
-        <section class="height-100 section bg-img-1 parallax"  data-stellar-background-ratio="0.5" id="home">
-            <div class="bg-overlay"></div>
-            <div class="container pos-vertical-center">
+        <span id="content-append"></span>
+        <script id="content" type="text/x-handlebars-template">
+        <section class="page-header-box section bg-gray">
+            <div class="container">
                 <div class="row">
                     <div class="col-sm-12 text-center">
-                        <div class="home-one-content">
-                            <h3 class="text-white m-0 m-t-5">We are Highway 4</h3>
-                            <p class="text-light font-bold text-uppercase">Drivers of Digital Transformation and Product Innovation.</p>
+                        <div class="title-box">
+                            <h3 class="text-white m-b-0">{{company_name}}</h3>
+                            <p class="text-white m-b-0">{{website}}</p>
                         </div>
                     </div>
                 </div> <!-- end row -->
-            </div>
-            <!-- end container-->
-
-            <!-- Animated Mouse -->
-            <div class="mouse-wrapper">
-                <div class="mouse">
-                    <div class="mouse-scroll"></div>
-                </div>
-            </div>
+            </div> <!-- end Container -->
         </section>
 
 
-        <section class="section" id="about">
+        <section class="section" id="results">
             <div class="container">
                 <div class="row">
-                	<div class="col-sm-12">
-                		<span id="content-append"></span>
-	                    <script id="content" type="text/x-handlebars-template">
-	                       <p>
-	                          My name is {{company_name}}. I am a {{id}}.
-	                       </p>
-	                    </script>
+                	<div class="col-md-12">
+	                       <h1 class="text-center">Website Score: <span class="text-warning">{{score}}</span></h1>
                 	</div>
                 </div> <!-- end row -->
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3">
+
+                        <table class="table table table-hover m-0">
+                            <thead>
+                            <tr>
+                                <th>Item Reviewed</th>
+                                <th>Status</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {{#each this}}
+                                {{#if this}}
+                                    {{#if (sectionTitle @key)}}
+                                        <tr>
+                                    {{else}}
+                                        <tr style="display:none;">
+                                    {{/if}}
+                                            <td colspan=2><h4 class="m-b-30 font-italic text-muted p-t-50">{{sectionTitle @key}}</h4></td>
+                                        </tr>
+                                    {{#if this.status}}
+        	                            <tr>
+        	                                <td>{{this.subject}}</td>
+        	                                <td class="{{addStatusClass this.status}}">{{this.status}}</td>
+        	                            </tr>
+                                    {{else this.company_name}}
+                                        <tr class="{{@key}}">
+                                            <td>{{@key}}</td>
+                                            <td>{{this}}</td>
+                                        </tr>
+                                    {{/if}}
+                                {{/if}}
+                            {{/each}}
+                            </tbody>
+                        </table>
+
+
+                    </div>
+                </div>
             </div>
             <!-- end container -->
         </section>
+        </script>
 
 
         <!-- Subscribe -->
@@ -283,7 +321,90 @@
 
         		$(json).each(function(){
         			if(this.review_id == getParameterByName('rid')) {
-        				window.json_html = templateScript(this);
+        				window.rid_match_json_obj = this;
+                        $.each(this,function(index, value){
+        					var regex_lookup = new RegExp('.*?'+'(_)'+'(_)',["i"]),
+        						regex_result = regex_lookup.exec(index);
+        					
+        					if(regex_result != null) {
+        						var regex_lookup_2 = new RegExp('.*?'+'(general)'+'(_)'+'(status)',["i"]),
+        							regex_result_2 = regex_lookup_2.exec(index);
+
+        						if(regex_result_2 == null || rid_match_json_obj[index] == '') {
+        							rid_match_json_obj[index] = false;
+        						} else {
+                                    var orj_index_status = rid_match_json_obj[index],
+                                        general_status_subject = index.replace('__general_status','__text');
+                                    rid_match_json_obj[index] = new Object();
+
+                                    rid_match_json_obj[index]['status'] = orj_index_status;
+                                    rid_match_json_obj[index]['subject'] = rid_match_json_obj[general_status_subject];
+
+                                }
+        					} else {
+                                if(index != 'company_name' && index != 'website' && index != 'score') {
+                                    rid_match_json_obj[index] = false;
+                                }
+                            }
+
+        				});
+
+                        Handlebars.registerHelper('addStatusClass',function(status){
+                            switch(status){
+                                case 'To Improve':
+                                    return 'text-warning';
+                                    break;
+                                case 'Passed':
+                                    return 'text-success';
+                                    break;
+                                case 'Errors':
+                                    return 'text-danger strong';
+                                    break;
+                                case 'Informational':
+                                    return 'text-muted';
+                                    break;
+                            }
+                        });
+
+                        Handlebars.registerHelper('sectionTitle',function(key){
+                            if(!window.sectionTitleCounter) {
+                                window.sectionTitleCounter = 0;
+                            }
+                            if(key.match('seo__') && window.sectionTitleCounter <= 1) {
+                                window.sectionTitleCounter++;
+                                return 'Search Engine Optimization (SEO)';
+                            }
+                            if(key.match('mobile__') && window.sectionTitleCounter <= 3) {
+                                window.sectionTitleCounter++;
+                                return 'Mobile';
+                            }
+                            if(key.match('usability__') && window.sectionTitleCounter <= 5) {
+                                window.sectionTitleCounter++;
+                                return 'Usability';
+                            }
+                            if(key.match('technologies__') && window.sectionTitleCounter <= 7) {
+                                window.sectionTitleCounter++;
+                                return 'Technologies';
+                            }
+                            if(key.match('backlinks__') && window.sectionTitleCounter <= 9) {
+                                window.sectionTitleCounter++;
+                                return 'Backlinks';
+                            }
+                            if(key.match('social__') && window.sectionTitleCounter <= 11) {
+                                window.sectionTitleCounter++;
+                                return 'Social';
+                            }
+                            if(key.match('local_visibility__') && window.sectionTitleCounter <= 13) {
+                                window.sectionTitleCounter++;
+                                return 'Local Visibility';
+                            }
+                            if(key.match('visitors__') && window.sectionTitleCounter <= 15) {
+                                window.sectionTitleCounter++;
+                                return 'Visitors';
+                            }
+                        });
+
+        				window.json_html = templateScript(rid_match_json_obj);
         				$('#content-append').append(json_html);
         			}		
         		});
