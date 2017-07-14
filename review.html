@@ -133,31 +133,26 @@
             <div class="container">
                 <div class="row">
                 	<div class="col-md-12">
-	                       <h1 class="text-center">Website Score: <span class="text-warning">{{score}}</span></h1>
+	                       <h1 class="text-center">Website Score: <span class="text-warning count">{{score}}</span></h1>
                 	</div>
                 </div> <!-- end row -->
                 <div class="row">
                     <div class="col-md-6 col-md-offset-3">
 
-                        <table class="table table table-hover m-0">
-                            <thead>
-                            <tr>
-                                <th>Item Reviewed</th>
-                                <th>Status</th>
-                            </tr>
-                            </thead>
+                        <table class="table table-hover m-0">
+                            
                             <tbody>
                             {{#each this}}
                                 {{#if this}}
                                     {{#if (sectionTitle @key)}}
-                                        <tr>
+                                        <tr class="title">
                                     {{else}}
-                                        <tr style="display:none;">
+                                        <tr class="to-remove" style="display:none;">
                                     {{/if}}
-                                            <td colspan=2><h4 class="m-b-30 font-italic text-muted p-t-50">{{sectionTitle @key}}</h4></td>
+                                            <td colspan=2><h3 class="font-italic m-t-30 m-b-10">{{sectionTitle @key}}</h3></td>
                                         </tr>
                                     {{#if this.status}}
-        	                            <tr>
+        	                            <tr class="item">
         	                                <td>{{this.subject}}</td>
         	                                <td class="{{addStatusClass this.status}}">{{this.status}}</td>
         	                            </tr>
@@ -331,7 +326,7 @@
         							regex_result_2 = regex_lookup_2.exec(index);
 
         						if(regex_result_2 == null || rid_match_json_obj[index] == '') {
-        							rid_match_json_obj[index] = false;
+        							rid_match_json_obj[index] = true; // originally false to no include empty values
         						} else {
                                     var orj_index_status = rid_match_json_obj[index],
                                         general_status_subject = index.replace('__general_status','__text');
@@ -343,7 +338,7 @@
                                 }
         					} else {
                                 if(index != 'company_name' && index != 'website' && index != 'score') {
-                                    rid_match_json_obj[index] = false;
+                                    rid_match_json_obj[index] = true; // originally false to no include empty values
                                 }
                             }
 
@@ -367,13 +362,13 @@
                         });
 
                         Handlebars.registerHelper('sectionTitle',function(key){
-                            if(!window.sectionTitleCounter) {
+                            if(typeof window.sectionTitleCounter == 'undefined') {
                                 window.sectionTitleCounter = 0;
                             }
                             if(key.match('seo__') && window.sectionTitleCounter <= 1) {
                                 window.sectionTitleCounter++;
-                                return 'Search Engine Optimization (SEO)';
-                            }
+                                return 'SEO';
+                            } 
                             if(key.match('mobile__') && window.sectionTitleCounter <= 3) {
                                 window.sectionTitleCounter++;
                                 return 'Mobile';
@@ -406,6 +401,15 @@
 
         				window.json_html = templateScript(rid_match_json_obj);
         				$('#content-append').append(json_html);
+                        
+                        // remove empty rows and title cleanup
+                        $('.to-remove').remove();
+
+                        $('tr.title').each(function(){
+                            if($(this).next('tr').hasClass('title')) {
+                                $(this).remove();
+                            }
+                        });
         			}		
         		});
 
