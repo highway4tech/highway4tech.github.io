@@ -61,7 +61,7 @@
             <div class="container-fluid">
                 <!-- Logo container-->
                 <div>
-                    <a href="index.html" class="logo">
+                    <a href="/" class="logo">
                         <span class="logo-light"><strong><i class="mdi mdi-cube-unfolded"></i> Highway 4 </strong></span>
                         <span class="logo-dark"><strong><i class="mdi mdi-cube-unfolded"></i> Highway 4 </strong></span>
                     </a>
@@ -88,19 +88,15 @@
                     <ul class="navigation-menu">
 
                         <li>
-                            <a href="#home">Home</a>
+                            <a href="#results">Website Review</a>
                         </li>
 
                         <li>
-                            <a href="#about">About</a>
+                            <a href="#next">Next Steps</a>
                         </li>
 
                         <li>
-                            <a href="#capabilities">Capabilities</a>
-                        </li>
-
-                        <li>
-                            <a href="#work">Work</a>
+                            <a href="#about">About Us</a>
                         </li>
 
                         <li>
@@ -121,23 +117,22 @@
                     <div class="col-sm-12 text-center">
                         <div class="title-box">
                             <h3 class="text-white m-b-0">{{company_name}}</h3>
-                            <p class="text-white m-b-0">{{website}}</p>
+                            <p class="text-white m-b-0"><a href="{{website}}" class="text-white" target="_blank">{{website}}</a></p>
                         </div>
                     </div>
                 </div> <!-- end row -->
             </div> <!-- end Container -->
         </section>
 
-
         <section class="section" id="results">
             <div class="container">
                 <div class="row">
                 	<div class="col-md-12">
-	                       <h1 class="text-center">Website Score: <span class="text-warning count">{{score}}</span></h1>
+	                       <h1 class="text-center p-t-50">Website Score: <span class="text-warning count">{{score}}</span></h1>
                 	</div>
                 </div> <!-- end row -->
                 <div class="row">
-                    <div class="col-md-6 col-md-offset-3">
+                    <div class="col-md-8 col-md-offset-2">
 
                         <table class="table table-hover m-0">
                             
@@ -175,6 +170,44 @@
         </section>
         </script>
 
+        <section class="section bg-gray-light" id="next">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="about-one-content">
+                            <p class="text-muted est-text font-italic">What does this review mean...</p>
+                            <h3 class="font-bold">and why is it so important?</h3>
+                            <p class="text-muted font-15">We want to show you the strengths of your website, as well as some areas that could use improvement. Making adjustments to your website could help greatly expand your reach, grow your audience and increase your ranking.</p>
+                            <p class="text-muted font-15">At <strong>Highway 4 Technologies</strong>, our team of experts have the ability to help improve your website based on the review suggestions.</p>
+                            <p class="text-muted font-15">Contact us for more details on your website review as well as other digital services we offer. We're happy to help and look forward to working with you.</p>
+                            <button class="btn btn-custom btn-lg m-b-5 m-t-30 text-center" data-toggle="modal" data-target="#con-close-modal">LET'S GET STARTED</button>
+
+                        </div> <!-- end about content -->
+                    </div> <!-- end col -->
+                    <div class="col-md-4 col-md-offset-2 col-sm-6">
+                        <div class="features-img-one">
+                            <img src="images/phone_two.png" class="img-responsive"/>
+                        </div>
+                    </div>
+                </div> <!-- end row -->
+            </div> <!-- end container-->
+        </section>
+
+
+        <section class="bg-img-2 section parallax" data-stellar-background-ratio="0.1" id="about">
+            <div class="bg-overlay" style="background-color: rgba(0,0,0,0.75);"></div>
+            <div class="container">
+                <div class="row text-center text-white">
+                    <div class="col-md-8 col-md-offset-2 facts">
+                        <h3 class="font-48">Who is Highway 4?</h3>
+                        <p class="font-16"><strong>Highway 4 Technologies</strong> is a digital services and product innovation consultancy based in the Bay Area. Our mission is to help local businesses reach their full digital potential by optimizing efficiency, productivity, quality, and experience through the strategic use of digital technologies and processes. We are your partner in navigating the digital landscape. <a href="#" class="text-custom" data-toggle="modal" data-target="#con-close-modal">Contact us to learn more and get started.</a></p>
+                    </div>
+                </div> <!-- end row -->
+
+            </div>
+            <!-- end of container-->
+        </section>
+
 
         <!-- Subscribe -->
         <section class="section bg-gray">
@@ -184,7 +217,7 @@
                     <div class="col-sm-6 col-sm-offset-3">
                         <div class="text-center about-one-content">
                             <p class="text-muted est-text font-italic m-b-0">Subscribe</p>
-                            <h3 class="font-bold m-t-10">Keep up-to-date on the latest.</h3>
+                            <h3 class="font-bold m-t-10">Keep up-to-date on the latest</h3>
                             <p class="text-muted font-15">Subscribe to our monthly newsletter to receive updates on our product and service offerings, case studies, digital technology insights, and more.</p>
                         </div>
                     </div>
@@ -237,7 +270,8 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                        <h4 class="modal-title">Send Us a Note</h4>
+                                        <h4 class="modal-title">Let's get started</h4>
+                                        <small>Please fill out the form and let us know what digital services you're interested in (NOTE: Clicking on 'Send' will open your email client). You can also email us directly: <a href="mailto:hello@highway4tech.com">hello@highway4tech.com</a>.</small>
                                     </div>
                                     <div class="modal-body">
                                         <div class="row">
@@ -258,17 +292,9 @@
                                         </div> <!-- end row -->
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label for="field-2" class="control-label">Subject</label>
-                                                    <input type="text" class="form-control" id="field-2" placeholder="Subject">
-                                                </div>
-                                            </div>
-                                        </div> <!-- end row -->
-                                        <div class="row">
-                                            <div class="col-md-12">
                                                 <div class="form-group no-margin">
                                                     <label for="field-7" class="control-label">Message</label>
-                                                    <textarea class="form-control autogrow" id="field-7" placeholder="Message" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 104px;"></textarea>
+                                                    <textarea class="form-control autogrow" id="field-7" placeholder="Let us know what digital services you're interested in (i.e. review website improvement suggestions, website development, digital marketing, mobile apps, etc)." style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 104px;"></textarea>
                                                 </div>
                                             </div>
                                         </div> <!-- end row -->
@@ -436,7 +462,7 @@
                     event.preventDefault();
                     var contactEmailTo = 'hello'+'@'+'highway4tech'+'.'+'com';
                     var contactName = $('input#field-1').val();
-                    var contactSubject = $('input#field-2').val();
+                    var contactSubject = 'Highway 4 - Website Form Submission (Request ID #'+getParameterByName('rid')+')';
                     var contactEmailFrom = $('input#field-3').val();
                     var contactMessage = $('textarea#field-7').val();
                     window.location = 'mailto:'+contactEmailTo+'?body='+contactMessage+'&subject='+contactSubject+'&cc='+contactEmailFrom+'&body='+contactMessage;
