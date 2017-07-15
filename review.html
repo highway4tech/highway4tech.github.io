@@ -525,6 +525,16 @@
         s1.charset='UTF-8';
         s1.setAttribute('crossorigin','*');
         s0.parentNode.insertBefore(s1,s0);
+
+        Tawk_API.onLoad = function(){
+            Tawk_API.setAttributes({
+                'id': getParameterByName('rid'),
+                'company':window.rid_match_json_obj.company_name,
+                'website':window.rid_match_json_obj.website,
+                'score':window.rid_match_json_obj.score
+            }, function(error){});
+        };
+
         })();
         </script>
         <!--End of Tawk.to Script-->
